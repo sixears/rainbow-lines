@@ -1,0 +1,35 @@
+#!/usr/local/bin/runghc -i/home/martyn/bin/hlib
+
+module Fluffy.Console.T.Rainbow where
+
+-- base --------------------------------
+
+import Prelude hiding ( lines )
+
+-- Fluffy ------------------------------
+
+import Fluffy.Console.Rainbow  ( cpack, clines, lines, lines' )
+import Fluffy.Devel.Test       ( diag, is, okay, test )
+
+--------------------------------------------------------------------------------
+
+main = do test [ is (lines (cpack "foo\nbar")) (map cpack ["foo", "bar"])
+                                                                  "simple lines"
+               , is (lines (cpack "foo\nbar\n")) (map cpack ["foo", "bar"])
+                                                                "simple lines 2"
+               , is (lines (cpack "foo")) [cpack "foo"]     "super simple lines"
+               , is (lines (cpack "\n")) [cpack ""]             "one line lines"
+               , is (lines (cpack "")) []                        "no line lines"
+
+               , is (lines' (cpack "foo\nbar")) (map cpack ["foo", "bar"])
+                                                                 "simple lines'"
+               , is (lines' (cpack "foo\nbar\n")) (map cpack ["foo", "bar"])
+                                                               "simple lines' 2"
+               , is (lines' (cpack "foo")) [cpack "foo"]   "super simple lines'"
+               , is (lines' (cpack "\n")) [cpack ""]           "one line lines'"
+               , is (lines' (cpack "")) [cpack ""]              "no line lines'"
+               , is (show $ clines [map cpack [ "foo\nbar", "baz"
+                                              , "quux\nfortuna\n" ]])
+                    "[ <<foo>>, <<barbazquux>>, <<fortuna>> ]"
+                    "cline"
+               ]

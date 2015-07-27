@@ -13,3 +13,7 @@ cabal.config
 *.prof
 *.hp
 *.aux
+*.log
+*~
+.cb
+doctests.tix

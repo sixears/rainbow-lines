@@ -1,4 +1,5 @@
 {-# LANGUAGE FlexibleInstances #-} -- for instance Stringish String
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 {-|
 
@@ -110,6 +111,7 @@ putLine cl = forM_ (getChunks cl) putChunk >> putLn
 
 newtype CLines s = CLines { getCLines :: [CLine s] -- ^ extract clines
                           }
+  deriving Monoid
 
 instance (Show s, Stringish s) => Show (CLines s) where
   show cls = "[ " ++ intercalate ", " (fmap show $ getCLines cls) ++ " ]"
